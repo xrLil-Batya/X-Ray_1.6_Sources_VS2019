@@ -36,12 +36,22 @@
 #	endif // VERIFY
 
 #	ifdef DEBUG
-#		define NODEFAULT				FATAL("nodefault reached")
-#		define VERIFY(expr)				do {static bool ignore_always = false; if (!ignore_always && !(expr)) ::Debug.fail(#expr,DEBUG_INFO,ignore_always);} while(0)
-#		define VERIFY2(expr,e2)		do {static bool ignore_always = false; if (!ignore_always && !(expr)) ::Debug.fail(#expr,e2,DEBUG_INFO,ignore_always);} while(0)
-#		define VERIFY3(expr,e2,e3)	do {static bool ignore_always = false; if (!ignore_always && !(expr)) ::Debug.fail(#expr,e2,e3,DEBUG_INFO,ignore_always);} while(0)
-#		define VERIFY4(expr,e2,e3,e4)do {static bool ignore_always = false; if (!ignore_always && !(expr)) ::Debug.fail(#expr,e2,e3,e4,DEBUG_INFO,ignore_always);} while(0)
-#		define CHK_DX(expr)				do {static bool ignore_always = false; HRESULT hr = expr; if (!ignore_always && FAILED(hr)) ::Debug.error(hr,#expr,DEBUG_INFO,ignore_always);} while(0)
+# ifdef NON_FATAL_VERIFY
+# define NODEFAULT FATAL("nodefault reached")
+# define VERIFY(expr) do {static bool ignore_always = false; if (!ignore_always && !(expr)) ::Debug.soft_fail(#expr,DEBUG_INFO);} while(0)
+# define VERIFY2(expr,e2) do {static bool ignore_always = false; if (!ignore_always && !(expr)) ::Debug.soft_fail(#expr,e2,DEBUG_INFO);} while(0)
+# define VERIFY3(expr,e2,e3) do {static bool ignore_always = false; if (!ignore_always && !(expr)) ::Debug.soft_fail(#expr,e2,e3,DEBUG_INFO);} while(0)
+# define VERIFY4(expr,e2,e3,e4)do {static bool ignore_always = false; if (!ignore_always && !(expr)) ::Debug.soft_fail(#expr,e2,e3,e4,DEBUG_INFO);} while(0)
+//# define CHK_DX(expr) do {static bool ignore_always = false; HRESULT hr = expr; if (!ignore_always && FAILED(hr)) ::Debug.soft_fail(/*hr,*/#expr,DEBUG_INFO);} while(0)
+# define CHK_DX(a) a
+# else
+# define NODEFAULT FATAL("nodefault reached")
+# define VERIFY(expr) do {static bool ignore_always = false; if (!ignore_always && !(expr)) ::Debug.fail(#expr,DEBUG_INFO,ignore_always);} while(0)
+# define VERIFY2(expr,e2) do {static bool ignore_always = false; if (!ignore_always && !(expr)) ::Debug.fail(#expr,e2,DEBUG_INFO,ignore_always);} while(0)
+# define VERIFY3(expr,e2,e3) do {static bool ignore_always = false; if (!ignore_always && !(expr)) ::Debug.fail(#expr,e2,e3,DEBUG_INFO,ignore_always);} while(0)
+# define VERIFY4(expr,e2,e3,e4)do {static bool ignore_always = false; if (!ignore_always && !(expr)) ::Debug.fail(#expr,e2,e3,e4,DEBUG_INFO,ignore_always);} while(0)
+# define CHK_DX(expr) do {static bool ignore_always = false; HRESULT hr = expr; if (!ignore_always && FAILED(hr)) ::Debug.error(hr,#expr,DEBUG_INFO,ignore_always);} while(0)
+# endif // NON_FATAL_VERIFY
 #	else // DEBUG
 #		ifdef __BORLANDC__
 #			define NODEFAULT

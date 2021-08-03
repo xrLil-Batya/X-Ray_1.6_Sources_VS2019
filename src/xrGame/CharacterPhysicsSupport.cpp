@@ -1167,7 +1167,9 @@ void	CCharacterPhysicsSupport::	CreateShell						( CObject* who, Fvector& dp, Fv
 	if(IsGameTypeSingle())
 	{
 		m_pPhysicsShell->SetPrefereExactIntegration	();//use exact integration for ragdolls in single
+#ifndef DEAD_BODY_COLLISION
 		m_pPhysicsShell->SetRemoveCharacterCollLADisable();
+#endif
 	}
 	else
 		m_pPhysicsShell->SetIgnoreDynamic();
