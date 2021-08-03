@@ -2,6 +2,8 @@
 #define xrCoreH
 #pragma once
 
+#include "../build_config_defines.h"
+
 #ifndef DEBUG
 #	define MASTER_GOLD
 #endif // DEBUG
