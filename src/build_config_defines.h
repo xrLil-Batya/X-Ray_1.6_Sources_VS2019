@@ -20,8 +20,14 @@
 // defined sun will move as configured in weather ltx files
 // #define DYNAMIC_SUN_MOVEMENT
 
-// limit FPS in menu to prevent video card overheat (by alpet) TODO: Repair build when defined
+// limit FPS in menu to prevent video card overheat (by alpet) 
+// TODO: Repair build when defined
 // #define ECO_RENDER
+
+// Use full cube Skybox maps.
+// Taken from https://vk.cc/c4Pcff
+// Requires changes for Skyboxes
+// #define SKYBOX_FULL_MAPS
 
 // --- xrGame ---
 // restore collision with dead bodies (thanks malandrinus) (Note: Collides with AI and they can get stuck)
